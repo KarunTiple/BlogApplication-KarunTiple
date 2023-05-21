@@ -7,6 +7,7 @@ import com.bikkadit.blogappapi.payloads.JwtAuthResponse;
 import com.bikkadit.blogappapi.payloads.UserDto;
 import com.bikkadit.blogappapi.security.JWTTokenHelper;
 import com.bikkadit.blogappapi.service.UserServiceI;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
-
+@Slf4j
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -50,6 +51,8 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<JwtAuthResponse> createToken(@RequestBody JwtAuthRequest request) throws Exception {
 
+        log.info("Initializing the login api of Auth Controller : {} ");
+
         this.authenticate(request.getUsername(), request.getPassword());
 
         UserDetails userDetails = this.userDetailsService.loadUserByUsername(request.getUsername());
@@ -59,6 +62,8 @@ public class AuthController {
         JwtAuthResponse response = new JwtAuthResponse();
 
         response.setToken(token);
+
+        log.info("Returning from login api of  Auth Controller : {} ");
 
         return new ResponseEntity<JwtAuthResponse>(response, HttpStatus.OK);
     }
@@ -89,9 +94,14 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<UserDto> registerUser(@Valid @RequestBody UserDto userDto) {
 
+        log.info("Initializing the Register User Api of Auth Controller : {} ");
+
         UserDto registerNewUser = this.userService.registerNewUser(userDto);
 
+        log.info("Returning the Register User Api of Auth Controller : {} ");
+
         return new ResponseEntity<UserDto>(registerNewUser, HttpStatus.CREATED);
+
     }
 
 }

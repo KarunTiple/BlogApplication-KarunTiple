@@ -51,11 +51,11 @@ public class PostController {
     public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto, @PathVariable Long userId,
                                               @PathVariable Long categoryId) {
 
-        log.info("Entering the PostController to Create Post with User ID : {} ",userId," And in the Category with Category ID",categoryId);
+        log.info("Entering the PostController to Create Post with User ID : {} ",userId," And in the Category with Category ID : {}",categoryId);
 
         PostDto createPost = this.postService.createPost(postDto, userId, categoryId);
 
-        log.info("Returning from PostController after Creating Post with User ID : {} ",userId," And in the Category with Category ID",categoryId);
+        log.info("Returning from PostController after Creating Post with User ID : {} ",userId," And in the Category with Category ID : {}",categoryId);
 
         return new ResponseEntity<PostDto>(createPost, HttpStatus.CREATED);
     }
@@ -204,7 +204,7 @@ public class PostController {
     @GetMapping("/posts/search/{keywords}")
     public ResponseEntity<List<PostDto>> searchPostByTitle(@PathVariable("keywords") String keywords) {
 
-        log.info("Entering the PostController to Search Post: {} ");
+        log.info("Entering the PostController to Search Post : {} ");
 
         List<PostDto> result = this.postService.searchPosts(keywords);
 
@@ -255,7 +255,7 @@ public class PostController {
     public void downloadImage(@PathVariable("imageName") String imageName, HttpServletResponse response)
             throws IOException {
 
-        log.info("Entering the PostController to Serve the Image on the Server");
+        log.info("Entering the PostController to Serve the Image on the Server : {}");
 
         InputStream resource = this.fileService.getResource(path, imageName);
 
@@ -263,7 +263,7 @@ public class PostController {
 
         StreamUtils.copy(resource, response.getOutputStream());
 
-        log.info("Returning from PostController after Serving the Image on the Server");
+        log.info("Returning from PostController after Serving the Image on the Server : {}");
 
     }
 
