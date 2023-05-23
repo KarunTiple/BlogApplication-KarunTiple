@@ -78,7 +78,7 @@ public class UserController {
 //  ADMIN
 //	Delete- delete user
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/{userId}")
+    @DeleteMapping("/user/{userId}")
     public ResponseEntity<ApiResponse> deleteUser(@PathVariable Long userId) {
 
         log.info("Entering the UserController to Delete User with User ID : {} ",userId);

@@ -224,7 +224,7 @@ public class PostController {
      */
 
     @PostMapping("/post/image/upload/{postId}")
-    public ResponseEntity<PostDto> uploadPostImage(@RequestParam("image") MultipartFile image,
+    public ResponseEntity<PostDto> uploadPostImage(@RequestPart("image") MultipartFile image,
                                                    @PathVariable Long postId) throws IOException {
 
         log.info("Entering the PostController to Upload Image in the Post with Post ID: {} ",postId);
