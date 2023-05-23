@@ -51,15 +51,12 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             try {
                 username = this.jwtTokenHelper.getUsernameFromToken(token);
             } catch (IllegalArgumentException e) {
-
                 log.warn((SecurityConstants.TOKEN_NOT_FOUND), e.getMessage());
             } catch (ExpiredJwtException e) {
-
                 log.warn((SecurityConstants.TOKEN_EXPIRED),e.getMessage());
             } catch (MalformedJwtException e) {
                 log.warn((SecurityConstants.INVALID_JWT),e.getMessage());
             }
-
         } else {
             log.error((SecurityConstants.BEARER_NOT_FOUND));
         }
