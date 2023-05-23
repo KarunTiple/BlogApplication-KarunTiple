@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.bikkadit.blogappapi.config.SecurityConstants;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,6 +21,7 @@ import io.jsonwebtoken.MalformedJwtException;
 
 import java.io.IOException;
 
+@Slf4j
 @Component
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
@@ -49,16 +51,17 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             try {
                 username = this.jwtTokenHelper.getUsernameFromToken(token);
             } catch (IllegalArgumentException e) {
-                System.out.println(SecurityConstants.TOKEN_NOT_FOUND);
+
+                log.warn((SecurityConstants.TOKEN_NOT_FOUND), e.getMessage());
             } catch (ExpiredJwtException e) {
-                System.out.println(SecurityConstants.TOKEN_EXPIRED);
+
+                log.warn((SecurityConstants.TOKEN_EXPIRED),e.getMessage());
             } catch (MalformedJwtException e) {
-                System.out.println(SecurityConstants.INVALID_JWT);
+                log.warn((SecurityConstants.INVALID_JWT),e.getMessage());
             }
 
         } else {
-            System.out.println(SecurityConstants.BEARER_NOT_FOUND);
-
+            log.error((SecurityConstants.BEARER_NOT_FOUND));
         }
         // once we get the token , now validate
 
@@ -79,11 +82,10 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 
             } else {
-                System.out.println(SecurityConstants.INVALID_JWT);
-
+                log.error((SecurityConstants.INVALID_JWT));
             }
         } else {
-            System.out.println(SecurityConstants.USERNAME_CONTEXT_INVALID);
+            log.error((SecurityConstants.USERNAME_CONTEXT_INVALID));
         }
 
         filterChain.doFilter(request, response);
