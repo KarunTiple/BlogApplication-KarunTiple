@@ -44,9 +44,7 @@ public class UserController {
         return new ResponseEntity<>(createUserDto, HttpStatus.CREATED);
     }
 
-
 //	PUT- update user
-
     /**
      * @author Karun
      * @param userDto
@@ -66,15 +64,12 @@ public class UserController {
         return ResponseEntity.ok(updatedUser);
     }
 
-//	PUT- delete user
-
     /**
      * @author Karun
      * @param userId
      * @return
      * @apiNote This api is for Deleting the User
      */
-
 //  ADMIN
 //	Delete- delete user
     @PreAuthorize("hasRole('ADMIN')")
@@ -87,12 +82,10 @@ public class UserController {
 
         log.info("Returning from UserController after Deleting User with User ID : {} ",userId);
 
-
         return new ResponseEntity<>(new ApiResponse(AppConstants.USER_DELETED, true), HttpStatus.OK);
     }
 
 //	GET - get user
-
     /**
      * @author Karun
      * @return
@@ -104,25 +97,21 @@ public class UserController {
         log.info("Entering the UserController to Get All User : {} ");
 
         return ResponseEntity.ok(this.userService.getAllUsers());
-
     }
 
 //	GET - get single user
-
     /**
      * @author Karun
      * @param userId
      * @return
      * @apiNote This api is for Getting the Single User
      */
-
     @GetMapping("/user/{userId}")
     public ResponseEntity<UserDto> getSingleUsers(@PathVariable Long userId) {
 
-        log.info("Entering the UserController to Get Single User : {} ");
+        log.info("Entering the UserController to Get Single User : {} ",userId);
 
         return ResponseEntity.ok(this.userService.getUserById(userId));
-
     }
 
 }

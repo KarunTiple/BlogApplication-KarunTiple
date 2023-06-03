@@ -24,7 +24,7 @@ public class PasswordEncryptor implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        System.out.println(this.passwordEncoder.encode("ktiple"));
+//        System.out.println(this.passwordEncoder.encode("ktiple"));
 
         try {
 
