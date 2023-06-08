@@ -61,6 +61,7 @@ public class AuthController {
 
         JwtAuthResponse response = new JwtAuthResponse();
 
+        response.setEmail(userDetails.getUsername());
         response.setToken(token);
 
         log.info("Returning from login api of  Auth Controller : {} ");
